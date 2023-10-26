@@ -36,8 +36,8 @@ const coinAPIURL = 'https://rest.coinapi.io/v1/exchangerate';
 const apiKey = '40311912-TODO PUT TO ENV API-KEY';
 
 class CoinData {
-  Future getCoinData() async {
-    String requestURL = '$coinAPIURL/BTC/USD?apikey=$apiKey';
+  Future getCoinData(String selectedCurrency) async {
+    String requestURL = '$coinAPIURL/BTC$selectedCurrency';
     http.Response response = await http.get(requestURL);
     if (response.statusCode == 200) {
       var decodedData = jsonDecode(response.body);
@@ -45,7 +45,7 @@ class CoinData {
       return lastPrice;
     } else {
       print(response.statusCode);
-      throw 'Failed requesting coin API';
+      throw 'Exception requesting Coin API';
     }
   }
 }
