@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 const List<String> currenciesList = [
   'AUD',
   'BRL',
@@ -27,5 +30,8 @@ const List<String> cryptoList = [
   'ETH',
   'LTC',
 ];
+
+const coinAPIURL = 'https://rest.coinapi.io/v1/exchangerate';
+const apiKey = '40311912-TODO PUT TO ENV API-KEY';
 
 class CoinData {}
