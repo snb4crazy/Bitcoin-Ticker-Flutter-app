@@ -53,12 +53,16 @@ class _PriceScreenState extends State<PriceScreen> {
   }
 
   String value = '?';
+  Map<String, String> coinValues = {};
+  bool isWaiting = false;
 
   void getData() async {
+    isWaiting = true;
     try {
-      double data = await CoinData().getCoinData(selectedCurrency);
+      var data = await CoinData().getCoinData(selectedCurrency);
+      isWaiting = false;
       setState(() {
-        value = data.toStringAsFixed(0);
+        coinValues = data;
       });
     } catch (e) {
       print(e);
