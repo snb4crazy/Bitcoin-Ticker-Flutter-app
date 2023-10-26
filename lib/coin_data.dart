@@ -37,15 +37,20 @@ const apiKey = '40311912-TODO PUT TO ENV API-KEY';
 
 class CoinData {
   Future getCoinData(String selectedCurrency) async {
-    String requestURL = '$coinAPIURL/BTC$selectedCurrency';
-    http.Response response = await http.get(requestURL);
-    if (response.statusCode == 200) {
-      var decodedData = jsonDecode(response.body);
-      var lastPrice = decodedData['rate'];
-      return lastPrice;
-    } else {
-      print(response.statusCode);
-      throw 'Exception requesting Coin API';
+    Map<String, String> cryptoPrices = {};
+    for (String crypto in cryptoList) {
+      String requestURL =
+          '$coinAPIURL/$crypto/$selectedCurrency?apikey=$apiKey';
+      http.Response response = await http.get(requestURL);
+      if (response.statusCode == 200) {
+        var decodedData = jsonDecode(response.body);
+        double price = decodedData['rate'];
+        cryptoPrices[crypto] = price.toStringAsFixed(0);
+      } else {
+        print(response.statusCode);
+        throw 'Exception requesting Coin API';
+      }
     }
+    return cryptoPrices;
   }
 }
