@@ -50,17 +50,23 @@ class _PriceScreenState extends State<PriceScreen> {
     );
   }
 
-  List<DropdownMenuItem> getDropDownItems() {
-    List<DropdownMenuItem<String>> dropdownItems = [];
+  String bitcoinValue = '?';
 
-    for (String currency in currenciesList) {
-      var newItem = DropdownMenuItem(
-        child: Text(currency),
-        value: currency,
-      );
-      dropdownItems.add(newItem);
+  void getData() async {
+    try {
+      double data = await CoinData().getCoinData();
+      setState(() {
+        bitcoinValue = data.toStringAsFixed(0);
+      });
+    } catch (e) {
+      print(e);
     }
-    return dropdownItems;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
   }
 
   @override
